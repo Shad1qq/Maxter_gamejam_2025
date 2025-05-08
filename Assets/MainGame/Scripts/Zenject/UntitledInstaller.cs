@@ -3,12 +3,10 @@ using Zenject;
 
 public class UntitledInstaller : MonoInstaller
 {
-    private InputPlayer input;
-
     public override void InstallBindings()
     {
         Application.targetFrameRate = 60;
-        Container.Bind<InputPlayer>().FromInstance(input = new()).AsSingle();
+        Container.Bind<InputPlayer>().FromNew().AsSingle();
         input.Enable();
     }
     
