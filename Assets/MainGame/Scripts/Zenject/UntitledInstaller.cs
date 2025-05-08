@@ -1,3 +1,4 @@
+using UnityEngine;
 using Zenject;
 
 public class UntitledInstaller : MonoInstaller
@@ -6,6 +7,13 @@ public class UntitledInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
+        Application.targetFrameRate = 60;
         Container.Bind<InputPlayer>().FromInstance(input = new()).AsSingle();
+        input.Enable();
+    }
+    
+    private void OnDisable()
+    {
+        input.Disable();
     }
 }

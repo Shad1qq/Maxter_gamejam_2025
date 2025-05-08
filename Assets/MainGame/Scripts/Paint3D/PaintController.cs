@@ -1,87 +1,80 @@
+using System.Collections;
 using UnityEngine;
 using Zenject;
 
 public class PaintController : MonoBehaviour
 {
 #region param
-    public Camera mainCamera;
-    public Texture2D texture;
-    public Color paintColor = Color.red;
-    public float brushSize = 5f;
+    private Camera mainCamera;
+    [Range(2, 512)]
+    [SerializeField] private int _brushSize = 8;
+
+    private int _oldRayX = 0, _oldRayY = 0;
+
+    public Color _color = Color.red;
+
     [Inject] private InputPlayer input;
 #endregion
 
     private void Start(){
+        mainCamera = Camera.main;
 
+        #region input
+        input.Player.Attack.started += i => StartCoroutine(OnPaintPerformed());
+        input.Player.Attack.canceled += i => StopAllCoroutines();
+        #endregion
     }
-
-    private void Update()
-    {
-        if (Input.GetMouseButton(0)) // ЛКМ
-        {
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-                Paint(hit);
+    private IEnumerator OnPaintPerformed(){
+        while(true){
+            Paints();
+            yield return new WaitForFixedUpdate();
         }
     }
 
-    private void Paint(RaycastHit hit)
+    private void Paints()
     {
-        Renderer renderer = hit.collider.GetComponent<Renderer>();
-        if (renderer != null && renderer.material.mainTexture == texture)
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 100f))
         {
-            Vector2 uv;
-            if (GetUV(hit, out uv))
+            if (hit.transform.gameObject.TryGetComponent(out Renderer renderer))
             {
-                int x = (int)(uv.x * texture.width);
-                int y = (int)(uv.y * texture.height);
-                DrawOnTexture(x, y);
-                texture.Apply();
+                Texture2D texture2D = renderer.material.mainTexture as Texture2D;
+
+                // Вычисление координат пикселей
+                int rayX = (int)(hit.textureCoord.x * texture2D.width);
+                int rayY = (int)(hit.textureCoord.y * texture2D.height);
+
+                if (_oldRayX != rayX || _oldRayY != rayY)
+                {
+                    DrawCircle(rayX, rayY, texture2D);
+                    _oldRayX = rayX;
+                    _oldRayY = rayY;
+                }
+            }
+        }    
+    }
+
+    private void DrawCircle(int rayX, int rayY, Texture2D texture2D) {
+        for (int y = 0; y < _brushSize; y++) {
+            for (int x = 0; x < _brushSize; x++) {
+                float x2 = Mathf.Pow(x - _brushSize / 2, 2);
+                float y2 = Mathf.Pow(y - _brushSize / 2, 2);
+                float r2 = Mathf.Pow(_brushSize / 2 - 0.5f, 2);
+
+                if (x2 + y2 < r2) {
+                    int pixelX = rayX + x - _brushSize / 2;
+                    int pixelY = rayY + y - _brushSize / 2;
+
+                    if (pixelX >= 0 && pixelX < texture2D.height && pixelY >= 0 && pixelY < texture2D.width) {
+                        Color oldColor = texture2D.GetPixel(pixelX, pixelY);
+                        Color resultColor = Color.Lerp(oldColor, _color, _color.a);
+                        texture2D.SetPixel(pixelX, pixelY, resultColor);
+                    }
+                }
             }
         }
-    }
-
-    private bool GetUV(RaycastHit hit, out Vector2 uv)
-    {
-        MeshCollider meshCollider = hit.collider as MeshCollider;
-        if (meshCollider != null)
-        {
-            Vector3 localPoint = hit.transform.InverseTransformPoint(hit.point);
-            Vector3[] vertices = meshCollider.sharedMesh.vertices;
-            Vector2[] uvs = meshCollider.sharedMesh.uv;
-
-            // Простой расчет UV (может потребовать доработки для более сложных моделей)
-            float minX = float.MaxValue;
-            float maxX = float.MinValue;
-            float minY = float.MaxValue;
-            float maxY = float.MinValue;
-
-            foreach (Vector3 vertex in vertices)
-            {
-                if (vertex.x < minX) minX = vertex.x;
-                if (vertex.x > maxX) maxX = vertex.x;
-                if (vertex.y < minY) minY = vertex.y;
-                if (vertex.y > maxY) maxY = vertex.y;
-            }
-
-            uv = new Vector2((localPoint.x - minX) / (maxX - minX), (localPoint.y - minY) / (maxY - minY));
-            return true;
-        }
-
-        uv = Vector2.zero;
-        return false;
-    }
-
-    private void DrawOnTexture(int x, int y)
-    {
-        int halfBrushSize = (int)(brushSize / 2);
-        for (int i = x - halfBrushSize; i < x + halfBrushSize; i++)
-        {
-            for (int j = y - halfBrushSize; j < y + halfBrushSize; j++)
-                if (i >= 0 && i < texture.width && j >= 0 && j < texture.height)
-                    texture.SetPixel(i, j, paintColor);
-        }
+        texture2D.Apply();
     }
 }
