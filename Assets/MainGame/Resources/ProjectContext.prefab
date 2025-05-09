@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f83792ca7ada7498d7c0ab67e78e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timer: {fileID: 0}
 --- !u!1 &8087142420364451576
 GameObject:
   m_ObjectHideFlags: 0
@@ -53,7 +54,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4541833173185324026}
-  - component: {fileID: 4518102708470659145}
+  - component: {fileID: -4174921713123217448}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -77,7 +78,7 @@ Transform:
   - {fileID: 5806040659995070649}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4518102708470659145
+--- !u!114 &-4174921713123217448
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,8 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
-  _monoInstallers:
-  - {fileID: 7902748075189598082}
+  _monoInstallers: []
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
   _editorReflectionBakingCoverageMode: 0

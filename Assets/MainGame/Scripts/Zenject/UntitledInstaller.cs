@@ -9,12 +9,13 @@ public class UntitledInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        gameCon = new(timer);
-        Container.Bind<GameController>().FromInstance(gameCon).AsSingle();
-
         Application.targetFrameRate = 60;
+
         Container.Bind<InputPlayer>().FromInstance(input = new()).AsSingle();
         input.Enable();
+        
+        gameCon = new(timer);
+        Container.Bind<GameController>().FromInstance(gameCon).AsSingle();
     }
     
     private void OnDisable()

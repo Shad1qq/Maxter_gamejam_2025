@@ -5,30 +5,22 @@ public class Movement : MonoBehaviour
 {
     private Rigidbody _rb;
     [SerializeField] private float _speed;
-    private InputPlayer _input;
+    [Inject] private InputPlayer _input;
+    private Vector3 direction;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        _input.Enable();
+        _input.Player.Move.performed += i => direction = i.ReadValue<Vector3>();
+        _input.Player.Move.canceled += i => direction = Vector3.zero;
     }
 
-    [Inject]
-    private void Constructor(InputPlayer input)
-    {
-        _input = input;
-    }
-    private void Update()
+    private void FixedUpdate()
     {
         Move();
     }
     private void Move()
     {
-        Vector3 direction = _input.Player.Move.ReadValue<Vector3>();
         _rb.linearVelocity = new Vector3(direction.x * _speed, _rb.linearVelocity.y, direction.z * _speed);
     }
-    private void OnDestroy()
-    {
-        _input.Disable();
-    }
-
 }

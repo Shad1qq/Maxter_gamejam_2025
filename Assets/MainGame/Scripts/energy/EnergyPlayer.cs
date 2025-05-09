@@ -27,9 +27,10 @@ public class EnergyPlayer : MonoBehaviour
 
     private IEnumerator EnergyLose(){
         while(true){
-            if(isAddEnergy)
+            if(isAddEnergy){
                 if(energy < maxEnergy)
                     energy++;
+            }
             else
                 energy--;
 
