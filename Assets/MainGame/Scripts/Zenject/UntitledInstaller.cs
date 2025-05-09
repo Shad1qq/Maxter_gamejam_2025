@@ -10,8 +10,8 @@ public class UntitledInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Application.targetFrameRate = 60;
-
-        Container.Bind<InputPlayer>().FromInstance(input = new()).AsSingle();
+        input = new();
+        Container.Bind<InputPlayer>().FromInstance(input).AsSingle();
         input.Enable();
         
         Container.Bind<GameController>().FromInstance(gameCon = new(timer)).AsSingle();
@@ -19,6 +19,7 @@ public class UntitledInstaller : MonoInstaller
     
     private void OnDestroy()
     {
-        input.Disable();
+        if(input != null)
+            input.Disable();
     }
 }

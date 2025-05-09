@@ -12,6 +12,7 @@ public class EnergyPlayer : MonoBehaviour
     [Inject] private GameController gameC;
     private bool isAddEnergy;
     [SerializeField] private TextMeshProUGUI energyView;
+    public Collider col;
 #endregion
 
     private void Start(){
@@ -28,8 +29,22 @@ public class EnergyPlayer : MonoBehaviour
     private IEnumerator EnergyLose(){
         while(true){
             if(isAddEnergy){
-                if(energy < maxEnergy)
+                if(energy < maxEnergy){
                     energy++;
+                
+                    if(col.TryGetComponent(out energyInventory inv)){
+                        if(inv.CheckEnergy()) isAddEnergy = false;
+
+                        inv.UpdateEnergy();
+                    }
+                }
+                else{
+                    if(col.TryGetComponent(out energyInventory inv)){
+                        if(inv.CheckEnergy()) isAddEnergy = false;
+
+                        inv.UpdateEnergy();
+                    }
+                }
             }
             else
                 energy--;

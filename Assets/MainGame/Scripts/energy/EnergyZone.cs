@@ -18,7 +18,9 @@ public class EnergyZone : MonoBehaviour
         {
             if (collider.CompareTag(targetTag))
             {
+                playerE.col = collider;
                 playerE.AddEnergy();
+
                 return;
             }
         }    
