@@ -35,16 +35,22 @@ public class PaintController : MonoBehaviour
     }
     private void Events(){
         if(isTab){
-            atack.started += i => StartCoroutine(OnPaintPerformed());
-            atack.canceled += i => StopAllCoroutines();
+            atack.started += StartCor;
+            atack.canceled += Stop;
             isTab = false;
         }
         else{
-            atack.started -= i => StartCoroutine(OnPaintPerformed());
-            atack.canceled -= i => StopAllCoroutines();
+            atack.started -= StartCor;
+            atack.canceled -= Stop;
             StopAllCoroutines();
             isTab = true;
         }
+    }
+    private void Stop(InputAction.CallbackContext context){
+        StopAllCoroutines();
+    }
+    private void StartCor(InputAction.CallbackContext context){
+        StartCoroutine(OnPaintPerformed());  
     }
 
     private IEnumerator OnPaintPerformed(){
