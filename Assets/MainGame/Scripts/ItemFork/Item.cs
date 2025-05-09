@@ -36,6 +36,8 @@ public class Item:MonoBehaviour
         InteractPanelUI.SetActive(false);
     }
     private void StartCor(){
+        if(col == null) return;
+
         if(!isItem)
             StartCoroutine(ItemMove(col.gameObject.transform));
         else{
@@ -43,7 +45,7 @@ public class Item:MonoBehaviour
             col.parent = null;
             col.GetComponent<Rigidbody>().isKinematic = false;
             col.GetComponent<Collider>().isTrigger = false;
-            isItem = true;
+            isItem = false;
         }
     }
     private IEnumerator ItemMove(Transform item){
