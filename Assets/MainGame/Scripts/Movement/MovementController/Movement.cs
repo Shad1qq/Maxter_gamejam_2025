@@ -5,6 +5,7 @@ public class Movement : MonoBehaviour
 {
     private Rigidbody _rb;
     [SerializeField] private float _speed;
+    [SerializeField] private float _radius;
     [Inject] private InputPlayer _input;
     private Vector3 direction;
 
@@ -14,7 +15,18 @@ public class Movement : MonoBehaviour
         _input.Player.Move.performed += i => direction = i.ReadValue<Vector3>();
         _input.Player.Move.canceled += i => direction = Vector3.zero;
     }
+    private void Update()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _radius);
 
+        foreach(Collider collider in colliders)
+        {
+            if (collider.TryGetComponent<Item>(out Item item ))
+            {
+
+            }
+        }
+    }
     private void FixedUpdate()
     {
         Move();
