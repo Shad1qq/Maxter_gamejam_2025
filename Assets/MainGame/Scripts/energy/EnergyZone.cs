@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnergyZone : MonoBehaviour
 {
     public float checkRadius = 1.0f; // Радиус проверки
-    public string targetTag = "Collectible";
+    public string targetTag = "Energy";
     private EnergyPlayer playerE;
 
     private void Start(){

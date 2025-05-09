@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class PaintController : MonoBehaviour
@@ -14,6 +16,9 @@ public class PaintController : MonoBehaviour
     private Color _color = Color.red;
 
     [Inject] private InputPlayer input;
+    private bool isTab = true;
+
+    private InputAction atack;
 #endregion
 
     public void IsPaint(Color color){
@@ -22,12 +27,26 @@ public class PaintController : MonoBehaviour
 
     private void Start(){
         mainCamera = Camera.main;
-
+        atack = input.Player.Attack;
+        
         #region input
-        input.Player.Attack.started += i => StartCoroutine(OnPaintPerformed());
-        input.Player.Attack.canceled += i => StopAllCoroutines();
+        input.Player.Tab.started += i => Events();
         #endregion
     }
+    private void Events(){
+        if(isTab){
+            atack.started += i => StartCoroutine(OnPaintPerformed());
+            atack.canceled += i => StopAllCoroutines();
+            isTab = false;
+        }
+        else{
+            atack.started -= i => StartCoroutine(OnPaintPerformed());
+            atack.canceled -= i => StopAllCoroutines();
+            StopAllCoroutines();
+            isTab = true;
+        }
+    }
+
     private IEnumerator OnPaintPerformed(){
         while(true){
             Paints();
@@ -44,6 +63,8 @@ public class PaintController : MonoBehaviour
         {
             if (hit.transform.gameObject.TryGetComponent(out Renderer renderer))
             {
+                if(hit.transform.gameObject.GetComponent<MeshCollider>() == null) return;
+
                 Texture2D texture2D = renderer.material.mainTexture as Texture2D;
 
                 // Вычисление координат пикселей
