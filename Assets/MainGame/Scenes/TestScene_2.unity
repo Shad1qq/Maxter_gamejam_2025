@@ -119,43 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &75671788 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1729208759117026561, guid: 9d473394c0e89714f9228d5125a87130, type: 3}
-  m_PrefabInstance: {fileID: 3796672624892808445}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &75671790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 75671788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _scriptableObjectInstallers: []
-  _monoInstallers:
-  - {fileID: 851360468}
-  _installerPrefabs: []
-  _autoRun: 1
-  OnPreInstall:
-    m_PersistentCalls:
-      m_Calls: []
-  OnPostInstall:
-    m_PersistentCalls:
-      m_Calls: []
-  OnPreResolve:
-    m_PersistentCalls:
-      m_Calls: []
-  OnPostResolve:
-    m_PersistentCalls:
-      m_Calls: []
-  _parentNewObjectsUnderSceneContext: 0
-  _contractNames: []
-  _parentContractNames: []
 --- !u!1 &208733055
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,17 +506,6 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
---- !u!114 &851360468 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 749880792475843707, guid: 9d473394c0e89714f9228d5125a87130, type: 3}
-  m_PrefabInstance: {fileID: 3796672624892808445}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0f83792ca7ada7498d7c0ab67e78e9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1449317801 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3113410923089117241, guid: 09019cbbdaae4e94ca43d8d4cf585089, type: 3}
@@ -927,7 +879,7 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 749880792475843707, guid: 9d473394c0e89714f9228d5125a87130, type: 3}
+    - target: {fileID: 467841123612652184, guid: 9d473394c0e89714f9228d5125a87130, type: 3}
       propertyPath: timer
       value: 
       objectReference: {fileID: 1449317801}
@@ -971,26 +923,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6446807633690457008, guid: 9d473394c0e89714f9228d5125a87130, type: 3}
-      propertyPath: _monoInstallers.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6446807633690457008, guid: 9d473394c0e89714f9228d5125a87130, type: 3}
-      propertyPath: '_monoInstallers.Array.data[0]'
-      value: 
-      objectReference: {fileID: 851360468}
     - target: {fileID: 6705117877031697207, guid: 9d473394c0e89714f9228d5125a87130, type: 3}
       propertyPath: m_Name
       value: System
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6446807633690457008, guid: 9d473394c0e89714f9228d5125a87130, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1729208759117026561, guid: 9d473394c0e89714f9228d5125a87130, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 75671790}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d473394c0e89714f9228d5125a87130, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

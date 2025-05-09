@@ -14,8 +14,7 @@ public class UntitledInstaller : MonoInstaller
         Container.Bind<InputPlayer>().FromInstance(input = new()).AsSingle();
         input.Enable();
         
-        gameCon = new(timer);
-        Container.Bind<GameController>().FromInstance(gameCon).AsSingle();
+        Container.Bind<GameController>().FromInstance(gameCon = new(timer)).AsSingle();
     }
     
     private void OnDisable()
