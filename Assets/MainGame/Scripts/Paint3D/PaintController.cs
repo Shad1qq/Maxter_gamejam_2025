@@ -11,10 +11,14 @@ public class PaintController : MonoBehaviour
 
     private int _oldRayX = 0, _oldRayY = 0;
 
-    public Color _color = Color.red;
+    private Color _color = Color.red;
 
     [Inject] private InputPlayer input;
 #endregion
+
+    public void IsPaint(Color color){
+        _color = color;
+    }
 
     private void Start(){
         mainCamera = Camera.main;

@@ -78,7 +78,7 @@ public class FlexibleColorPicker : MonoBehaviour {
     [SerializeField]
     private Sprite[] staticSpriteMain;
     public enum MainPickingMode {
-        HS, HV, SH, SV, VH, VS
+        HS, HV, SH
     }
 
     //private state
@@ -432,9 +432,6 @@ public class FlexibleColorPicker : MonoBehaviour {
         case MainPickingMode.HS: return PickColor2D(color, PickerType.H, v.x, PickerType.S, v.y);
         case MainPickingMode.HV: return PickColor2D(color, PickerType.H, v.x, PickerType.V, v.y);
         case MainPickingMode.SH: return PickColor2D(color, PickerType.S, v.x, PickerType.H, v.y);
-        case MainPickingMode.SV: return PickColor2D(color, PickerType.S, v.x, PickerType.V, v.y);
-        case MainPickingMode.VH: return PickColor2D(color, PickerType.V, v.x, PickerType.H, v.y);
-        case MainPickingMode.VS: return PickColor2D(color, PickerType.V, v.x, PickerType.S, v.y);
         default: return bufferedColor;
         }
     }
@@ -617,9 +614,6 @@ public class FlexibleColorPicker : MonoBehaviour {
         case MainPickingMode.HS: return new Vector2(GetValue1D(PickerType.H), GetValue1D(PickerType.S));
         case MainPickingMode.HV: return new Vector2(GetValue1D(PickerType.H), GetValue1D(PickerType.V));
         case MainPickingMode.SH: return new Vector2(GetValue1D(PickerType.S), GetValue1D(PickerType.H));
-        case MainPickingMode.SV: return new Vector2(GetValue1D(PickerType.S), GetValue1D(PickerType.V));
-        case MainPickingMode.VH: return new Vector2(GetValue1D(PickerType.V), GetValue1D(PickerType.H));
-        case MainPickingMode.VS: return new Vector2(GetValue1D(PickerType.V), GetValue1D(PickerType.S));
         default: throw new Exception("Unkown main picking mode: " + mode);
         }
     }
