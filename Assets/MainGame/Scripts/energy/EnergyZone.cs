@@ -24,6 +24,7 @@ public class EnergyZone : MonoBehaviour
                 return;
             }
         }    
+        playerE.col = null;
         playerE.RemoveEnergy();
     }
 }

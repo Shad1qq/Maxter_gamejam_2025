@@ -28,26 +28,23 @@ public class EnergyPlayer : MonoBehaviour
 
     private IEnumerator EnergyLose(){
         while(true){
-            if(isAddEnergy){
-                if(energy < maxEnergy){
-                    energy++;
-                
-                    if(col.TryGetComponent(out energyInventory inv)){
-                        if(inv.CheckEnergy()) isAddEnergy = false;
-
-                        inv.UpdateEnergy();
-                    }
-                }
-                else{
-                    if(col.TryGetComponent(out energyInventory inv)){
-                        if(inv.CheckEnergy()) isAddEnergy = false;
-
-                        inv.UpdateEnergy();
+            if(col == null)
+                energy--;
+            else{
+                if(col.TryGetComponent(out energyInventory inv)){
+                    if(inv.CheckEnergy()) 
+                        energy--;
+                    else{
+                        if(energy < maxEnergy){
+                            energy++;
+                            
+                            inv.UpdateEnergy();
+                        }
+                        else
+                            inv.UpdateEnergy();
                     }
                 }
             }
-            else
-                energy--;
 
             if(energy <= 0){
                 gameC.LouseGame();
